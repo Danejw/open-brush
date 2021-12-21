@@ -35,7 +35,7 @@ namespace TiltBrush
         private List<string> m_MaterialKeywords = new List<string>();
         private int m_CurrentTimestamp;
 
-        static private Dictionary<ushort, Batch> sm_BatchMap = new Dictionary<ushort, Batch>();
+        static protected Dictionary<ushort, Batch> sm_BatchMap = new Dictionary<ushort, Batch>();
 
         public CanvasScript Canvas { get { return m_owner; } }
         public List<string> MaterialKeywords

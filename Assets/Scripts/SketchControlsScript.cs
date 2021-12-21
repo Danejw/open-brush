@@ -140,7 +140,8 @@ namespace TiltBrush
             LoadWaitOnDownload,
             SignOutConfirm,
             ReadOnlyNotice,
-            OpenColorOptionsPopup = 7000
+            OpenColorOptionsPopup = 7000,
+
         }
 
         public enum ControlsType

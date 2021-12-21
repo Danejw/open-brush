@@ -21,7 +21,7 @@ namespace TiltBrush
     {
         public delegate void PoseChangedEventHandler(TrTransform prev, TrTransform current);
 
-        [SerializeField] private string[] m_BatchKeywords;
+        [SerializeField] protected string[] m_BatchKeywords;
 
 #if UNITY_EDITOR
         /// Pass a GameObject to receive the newly-created CanvasScript.
@@ -33,7 +33,7 @@ namespace TiltBrush
             // There are instances of CanvasScript in the scene, and I don't want to
             // willy-nilly add [ExecuteInEditMode] without verifying it won't cause
             // issues at edit time. Instead, initialize canvas by hand.
-            ret.Awake();
+            ret.Ignite();
             return ret;
         }
 
@@ -56,6 +56,7 @@ namespace TiltBrush
         public BatchManager BatchManager
         {
             get { return m_BatchManager; }
+            protected set { m_BatchManager = value; }
         }
 
         /// Helper for getting and setting transforms on Transform components.
@@ -124,7 +125,7 @@ namespace TiltBrush
         }
 
         // Init unless already initialized. Safe to call zero or multiple times.
-        public void Init()
+        public virtual void Init()
         {
             if (m_bInitialized)
             {
@@ -135,7 +136,8 @@ namespace TiltBrush
             AsCanvas = new TransformExtensions.RelativeAccessor(transform);
         }
 
-        void Awake()
+        [EasyButtons.Button]
+        public virtual void Ignite()
         {
             // Canvases might be dynamically created, so we can't rely on them all
             // being initialized at App-init time.
@@ -148,7 +150,12 @@ namespace TiltBrush
             m_BatchManager.Init(this);
         }
 
-        void Update()
+        private void Awake()
+        {
+            Ignite();
+        }
+
+        public virtual void Update()
         {
 #if UNITY_EDITOR
             // All changes must go through .Pose accessor
