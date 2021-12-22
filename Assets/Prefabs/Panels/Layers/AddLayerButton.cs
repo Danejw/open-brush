@@ -14,7 +14,7 @@ namespace TiltBrush.Layers
         public float delay = 5f;
         private bool isDown = false;
 
-        public void Update()
+        public void FixedUpdate()
         {
             if (m_CurrentButtonState == ButtonState.Pressed && !isDown)
                 StartCoroutine(DelayAfterClick());

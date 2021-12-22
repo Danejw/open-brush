@@ -16717,7 +16717,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1370550523}
-  - component: {fileID: 1370550525}
   - component: {fileID: 1370550524}
   m_Layer: 0
   m_Name: SceneParent
@@ -16758,22 +16757,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MainCanvas: {fileID: 1843608206}
   m_SelectionCanvas: {fileID: 1830711221}
---- !u!114 &1370550525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1370550522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d130adead93f8b2499e6bcd52ea6b3fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MainCanvas: {fileID: 1843608206}
-  m_SelectionCanvas: {fileID: 1830711221}
-  layerManager: {fileID: 0}
   m_ActiveCanvas: {fileID: 0}
+  m_LayerCanvases: []
 --- !u!1 &1373217984
 GameObject:
   m_ObjectHideFlags: 0

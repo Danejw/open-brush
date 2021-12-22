@@ -15,6 +15,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TiltBrush.Layers;
 
 namespace TiltBrush
 {
@@ -24,22 +25,30 @@ namespace TiltBrush
     // (e.g. component enabled vs. game object active).
     public class SceneScript : MonoBehaviour
     {
-        public delegate void PoseChangedEventHandler(
-            TrTransform prev, TrTransform current);
-        public delegate void ActiveCanvasChangedEventHandler(
-            CanvasScript prev, CanvasScript current);
+        public delegate void PoseChangedEventHandler(TrTransform prev, TrTransform current);
+        public event PoseChangedEventHandler PoseChanged;
 
+        public delegate void ActiveCanvasChangedEventHandler(CanvasScript prev, CanvasScript current);
+        public event ActiveCanvasChangedEventHandler ActiveCanvasChanged;
+
+        public delegate void LayerCanvasesUpdateEventHandler(List<CanvasScript> layerCanvases);
+        public event LayerCanvasesUpdateEventHandler LayerCanvasesUpdate;
+
+        public delegate void LayerCanvasAddedEventHandler(CanvasScript layerCanvas);
+        public event LayerCanvasAddedEventHandler LayerCanvasAdded;
+
+        public delegate void LayerCanvasDeletedEventHandler(CanvasScript layerCanvas);
+        public event LayerCanvasDeletedEventHandler LayerCanvasDeleted;
+
+
+        [SerializeField] private CanvasScript m_ActiveCanvas;
         [SerializeField] private CanvasScript m_MainCanvas;
         [SerializeField] private CanvasScript m_SelectionCanvas;
+        [SerializeField] private List<CanvasScript> m_LayerCanvases;
 
         private bool m_bInitialized;
         private Light[] m_Lights;
 
-        private CanvasScript m_ActiveCanvas;
-        private List<CanvasScript> m_LayerCanvases;
-
-        public event PoseChangedEventHandler PoseChanged;
-        public event ActiveCanvasChangedEventHandler ActiveCanvasChanged;
 
         /// Helper for getting and setting transforms on Transform components.
         /// Transform natively allows you to access parent-relative ("local")
@@ -126,7 +135,6 @@ namespace TiltBrush
                 }
             }
         }
-
         /// The initial start-up canvas; guaranteed to always exist
         public CanvasScript MainCanvas { get { return m_MainCanvas; } }
         public CanvasScript SelectionCanvas { get { return m_SelectionCanvas; } }
@@ -150,6 +158,22 @@ namespace TiltBrush
                 }
             }
         }
+        public IEnumerable<CanvasScript> LayerCanvases
+        {
+            get
+            {
+                yield return MainCanvas;
+
+                if (m_LayerCanvases != null)
+                {
+                    for (int i = 0; i < m_LayerCanvases.Count; ++i)
+                    {
+                        yield return m_LayerCanvases[i];
+                    }
+                }
+            }
+        }
+
 
         // Init unless already initialized. Safe to call zero or multiple times.
         public void Init()
@@ -162,6 +186,7 @@ namespace TiltBrush
             m_LayerCanvases = new List<CanvasScript>();
             AsScene = new TransformExtensions.RelativeAccessor(transform);
             m_ActiveCanvas = m_MainCanvas;
+
             foreach (var c in AllCanvases)
             {
                 c.Init();
@@ -188,9 +213,11 @@ namespace TiltBrush
             m_Lights[(int)LightMode.Shadow].renderMode = LightRenderMode.ForcePixel;
             m_Lights[(int)LightMode.NoShadow].shadows = LightShadows.None;
             m_Lights[(int)LightMode.NoShadow].renderMode = LightRenderMode.ForceVertex;
+
         }
 
-        public CanvasScript Test_AddLayer()
+        [EasyButtons.Button]
+        public CanvasScript AddLayer()
         {
 #if (UNITY_EDITOR || EXPERIMENTAL_ENABLED)
             if (Config.IsExperimental)
@@ -202,12 +229,28 @@ namespace TiltBrush
                 var layer = go.AddComponent<CanvasScript>();
                 m_LayerCanvases.Add(layer);
                 App.Scene.ActiveCanvas = layer;
+
+                LayerCanvasAdded?.Invoke(layer);
+                LayerCanvasesUpdate?.Invoke(m_LayerCanvases);
                 return layer;
             }
-#endif
             return null;
+#endif
         }
 
+        [EasyButtons.Button]
+        public void DeleteLayer(CanvasScript layer)
+        {
+            if (m_LayerCanvases.Contains(layer))
+            {
+                m_LayerCanvases.Remove(layer);
+                Destroy(layer.gameObject);
+            }
+
+            LayerCanvasesUpdate?.Invoke(m_LayerCanvases);
+        }
+
+        [EasyButtons.Button]
         public void Test_SquashCurrentLayer()
         {
 #if (UNITY_EDITOR || EXPERIMENTAL_ENABLED)
@@ -235,6 +278,7 @@ namespace TiltBrush
 #endif
         }
 
+        [EasyButtons.Button]
         public void Test_CycleCanvas()
         {
 #if (UNITY_EDITOR || EXPERIMENTAL_ENABLED)

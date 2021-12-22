@@ -193,7 +193,7 @@ namespace TiltBrush.Layers
 
         private void Update()
         {
-            //App.Scene.ActiveCanvas = layerManager.activeLayer.Value.GetComponent<CanvasScript>();
+            App.Scene.ActiveCanvas = layerManager.activeLayer.Value.GetComponent<CanvasScript>();
         }
 
 

@@ -13,7 +13,7 @@ namespace TiltBrush.Layers
         public float delay = 5f;
         private bool isDown = false;
 
-        private void Update()
+        private void FixedUpdate()
         {
                 if (m_CurrentButtonState == ButtonState.Pressed)
                     if (!isDown)

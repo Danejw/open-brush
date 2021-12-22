@@ -1352,7 +1352,7 @@ namespace TiltBrush
                         // otherwise squash current layer to main
                         if (App.Scene.ActiveCanvas == App.Scene.MainCanvas)
                         {
-                            App.Scene.Test_AddLayer();
+                            App.Scene.AddLayer();
                         }
                         else
                         {

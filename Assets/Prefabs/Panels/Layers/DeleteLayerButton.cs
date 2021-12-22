@@ -7,13 +7,13 @@ namespace TiltBrush.Layers
 {
     public class DeleteLayerButton : BaseButton
     {
-        public delegate void OnDeleteLayer(GameObject layerUi);
+        public delegate void OnDeleteLayer(GameObject layer);
         public static event OnDeleteLayer onDeleteLayer;
 
-        public float delay = .05f;
+        public float delay = 5f;
         private bool isDown = false;
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (m_CurrentButtonState == ButtonState.Pressed && !isDown)
                 StartCoroutine(DelayAfterClick());
