@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a32318dec4495cb166bf98e60f7c0d, type: 3}
+  m_Name: _TextureGroup_Components_UIManager
+  m_EditorClassIdentifier: 
+  GroupCategory: UIManager
+  GroupName: Components
+  RemovePrefixFromTextureName: 
+  Textures:
+  - TextureName: UIContainer
+    TextureReference: {fileID: 2800000, guid: 2019e7fe46f757645a2e0e24bd23ad24, type: 3}
+  - TextureName: UISelectableAnimator
+    TextureReference: {fileID: 2800000, guid: bef285cb75edd844892b47a3bc515049, type: 3}
+  - TextureName: UIToggleCheckbox
+    TextureReference: {fileID: 2800000, guid: 0e352e1e6651aba46bef154b36c6fe1f, type: 3}
+  - TextureName: UIToggleGroup
+    TextureReference: {fileID: 2800000, guid: 534e5a0567785644685dee4efe273f7b, type: 3}
+  - TextureName: UIToggleRadio
+    TextureReference: {fileID: 2800000, guid: 1741feaa525c96448938797666fb0898, type: 3}
+  - TextureName: UIToggleSwitch
+    TextureReference: {fileID: 2800000, guid: e2cadc1b8b2f03646b8f502612d46082, type: 3}

@@ -366,7 +366,6 @@ namespace TiltBrush
                     AudioManager.m_Instance.DisabledItemSelect(transform.position);
                 }
             }
-
         }
 
         virtual protected void OnButtonPressed() { }
@@ -380,9 +379,13 @@ namespace TiltBrush
             if (m_CurrentButtonState != ButtonState.Untouched && IsAvailable())
             {
                 ResetScale();
+                OnButtonReleased();
                 m_CurrentButtonState = ButtonState.Untouched;
             }
         }
+
+        virtual protected void OnButtonReleased() { }
+
 
         override public void GainFocus()
         {

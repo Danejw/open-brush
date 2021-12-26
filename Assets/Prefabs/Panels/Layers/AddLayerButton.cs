@@ -11,22 +11,11 @@ namespace TiltBrush.Layers
         public delegate void OnAddLayer();
         public static event OnAddLayer onAddLayer;
 
-        public float delay = 5f;
-        private bool isDown = false;
-
-        public void FixedUpdate()
+        // the input from the controller invokes onAddLayer message twice!!! >:(
+        protected override void OnButtonPressed()
         {
-            if (m_CurrentButtonState == ButtonState.Pressed && !isDown)
-                StartCoroutine(DelayAfterClick());
-        }
-
-        private IEnumerator DelayAfterClick()
-        {
-            isDown = true;
             onAddLayer?.Invoke();
-            yield return new WaitForSeconds(delay * Time.deltaTime * 10);
-            isDown = false;
+            Debug.Log("AddLayerButtonPressed");
         }
-
-    }
+    } 
 }

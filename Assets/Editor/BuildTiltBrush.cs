@@ -972,21 +972,27 @@ static class BuildTiltBrush
 
     class RestoreVrSdks : IDisposable
     {
+        /*
         Dictionary<BuildTargetGroup, string[]> m_prev;
         public RestoreVrSdks()
         {
             m_prev = new[] { BuildTargetGroup.Standalone, BuildTargetGroup.Android }
                 .ToDictionary(
                     btg => btg,
-                    btg => PlayerSettings.GetVirtualRealitySDKs(btg));
+                     btg => PlayerSettings.GetVirtualRealitySDKs(btg));
+                    
         }
+        */
         public void Dispose()
         {
+            /*
             foreach (var entry in m_prev)
             {
                 PlayerSettings.SetVirtualRealitySDKs(entry.Key, entry.Value);
             }
+            */
         }
+        
     }
 
     class RestoreFileContents : IDisposable

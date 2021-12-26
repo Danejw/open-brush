@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using UnityEngine;
-using UnityEngine.VR;
+using UnityEngine.XR;
 using System.Collections;
 
 /// The GvrArmModel is a standard interface to interact with a scene with the controller.

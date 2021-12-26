@@ -213,7 +213,6 @@ namespace TiltBrush
             m_Lights[(int)LightMode.Shadow].renderMode = LightRenderMode.ForcePixel;
             m_Lights[(int)LightMode.NoShadow].shadows = LightShadows.None;
             m_Lights[(int)LightMode.NoShadow].renderMode = LightRenderMode.ForceVertex;
-
         }
 
         [EasyButtons.Button]
@@ -223,19 +222,23 @@ namespace TiltBrush
             if (Config.IsExperimental)
             {
                 var go = new GameObject(string.Format("Layer {0}", m_LayerCanvases.Count));
+
+                Debug.Log("Adding Layer "+ go.name);
+
                 go.transform.parent = transform;
                 Coords.AsLocal[go.transform] = TrTransform.identity;
                 go.transform.hasChanged = false;
+              
                 var layer = go.AddComponent<CanvasScript>();
                 m_LayerCanvases.Add(layer);
                 App.Scene.ActiveCanvas = layer;
 
                 LayerCanvasAdded?.Invoke(layer);
                 LayerCanvasesUpdate?.Invoke(m_LayerCanvases);
-                return layer;
+                return layer;             
             }
-            return null;
 #endif
+            return null;
         }
 
         [EasyButtons.Button]
@@ -244,6 +247,8 @@ namespace TiltBrush
             if (m_LayerCanvases.Contains(layer))
             {
                 m_LayerCanvases.Remove(layer);
+                foreach (Batch b in layer.BatchManager.AllBatches())
+                    b.Destroy();
                 Destroy(layer.gameObject);
             }
 

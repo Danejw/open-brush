@@ -23,7 +23,7 @@ namespace TiltBrush
     public class BatchManager
     {
         /// Leave this many batches per pool mutable
-        public const int kBatchesToLeaveMutable = 1;
+        public const int kBatchesToLeaveMutable = 5;
         /// In frames
         public const int kTimeUntilBatchImmutable = 60;
 
@@ -35,7 +35,7 @@ namespace TiltBrush
         private List<string> m_MaterialKeywords = new List<string>();
         private int m_CurrentTimestamp;
 
-        static protected Dictionary<ushort, Batch> sm_BatchMap = new Dictionary<ushort, Batch>();
+        public static Dictionary<ushort, Batch> sm_BatchMap = new Dictionary<ushort, Batch>();
 
         public CanvasScript Canvas { get { return m_owner; } }
         public List<string> MaterialKeywords

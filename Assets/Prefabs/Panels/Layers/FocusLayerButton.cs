@@ -10,23 +10,20 @@ namespace TiltBrush.Layers
         public delegate void OnFocusedLayer(GameObject layerUi);
         public static event OnFocusedLayer onFocusedLayer;
 
-        public float delay = 5f;
-        private bool isDown = false;
+        bool canPress = true;
 
-        private void FixedUpdate()
+        protected override void OnButtonPressed()
         {
-                if (m_CurrentButtonState == ButtonState.Pressed)
-                    if (!isDown)
-                        StartCoroutine(DelayAfterClick());
+            if (canPress)
+                StartCoroutine(debounce());
         }
 
-        private IEnumerator DelayAfterClick()
+        private IEnumerator debounce()
         {
-            isDown = true;
+            canPress = false;
             onFocusedLayer?.Invoke(transform.parent.gameObject);
-            yield return new WaitForSeconds(delay * Time.deltaTime * 10);
-            isDown = false;
+            yield return new WaitForEndOfFrame();
+            canPress = true;
         }
-
     }
 }

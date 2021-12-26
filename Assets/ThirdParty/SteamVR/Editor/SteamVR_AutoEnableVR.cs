@@ -61,7 +61,8 @@ namespace Valve.VR
 #if (UNITY_5_4 || UNITY_5_3 || UNITY_5_2 || UNITY_5_1 || UNITY_5_0)
                 string[] devices = UnityEditorInternal.VR.VREditor.GetVREnabledDevices(currentTarget);
 #else
-                string[] devices = UnityEditorInternal.VR.VREditor.GetVREnabledDevicesOnTargetGroup(currentTarget);
+                //string[] devices = UnityEngine.XR.InputDevices.GetDevices(currentTarget);
+                string[] devices = new string[4]; //UnityEditorInternal.VR.VREditor.SetVREnabledOnTargetGroup(currentTarget, true);//   .VREditor.GetVREnabledDevicesOnTargetGroup(currentTarget);
 #endif
 
                 bool hasOpenVR = devices.Any(device => string.Equals(device, openVRString, System.StringComparison.CurrentCultureIgnoreCase));
