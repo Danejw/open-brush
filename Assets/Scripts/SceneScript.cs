@@ -25,6 +25,8 @@ namespace TiltBrush
     // (e.g. component enabled vs. game object active).
     public class SceneScript : MonoBehaviour
     {
+        public bool debug = false;
+
         public delegate void PoseChangedEventHandler(TrTransform prev, TrTransform current);
         public event PoseChangedEventHandler PoseChanged;
 
@@ -113,12 +115,12 @@ namespace TiltBrush
         {
             get
             {
-                Debug.Assert(m_bInitialized);
+                if (debug) Debug.Assert(m_bInitialized);
                 return m_ActiveCanvas;
             }
             set
             {
-                Debug.Assert(m_bInitialized);
+                if (debug) Debug.Assert(m_bInitialized);
                 if (value != m_ActiveCanvas)
                 {
                     var prev = m_ActiveCanvas;
@@ -135,6 +137,7 @@ namespace TiltBrush
                 }
             }
         }
+
         /// The initial start-up canvas; guaranteed to always exist
         public CanvasScript MainCanvas { get { return m_MainCanvas; } }
         public CanvasScript SelectionCanvas { get { return m_SelectionCanvas; } }
@@ -223,7 +226,7 @@ namespace TiltBrush
             {
                 var go = new GameObject(string.Format("Layer {0}", m_LayerCanvases.Count));
 
-                Debug.Log("Adding Layer "+ go.name);
+                if (debug) Debug.Log("Adding Layer "+ go.name);
 
                 go.transform.parent = transform;
                 Coords.AsLocal[go.transform] = TrTransform.identity;

@@ -5,25 +5,13 @@ using UnityEngine;
 
 namespace TiltBrush.Layers
 {
-    public class FocusLayerButton : OptionButton
+    public class FocusLayerButton : BaseButton
     {
+        public bool debug = true;
+
         public delegate void OnFocusedLayer(GameObject layerUi);
         public static event OnFocusedLayer onFocusedLayer;
 
-        bool canPress = true;
-
-        protected override void OnButtonPressed()
-        {
-            if (canPress)
-                StartCoroutine(debounce());
-        }
-
-        private IEnumerator debounce()
-        {
-            canPress = false;
-            onFocusedLayer?.Invoke(transform.parent.gameObject);
-            yield return new WaitForEndOfFrame();
-            canPress = true;
-        }
+        protected override void OnButtonPressed() => onFocusedLayer?.Invoke(transform.parent.gameObject);
     }
 }

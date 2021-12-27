@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using EasyButtons;
+using System;
 
 namespace TiltBrush.Layers
 {
     public class LayerUI_Manager : MonoBehaviour
     {
+        public bool debug = false;
+
         [SerializeField] private SceneScript sceneScript;
         [SerializeField] private GameObject layerPrefab;
 
@@ -46,7 +49,7 @@ namespace TiltBrush.Layers
                 CanvasScript mainCanvas = sceneScript.MainCanvas;
                 GameObject mainLayer = Instantiate(layerPrefab, this.transform);
 
-                Debug.Log("Creating Layer " + mainLayer.name);
+                if (debug) Debug.Log("Creating Layer " + mainLayer.name);
 
                 // put it into the dict
                 layerMap.Add(mainLayer, mainCanvas);
@@ -74,20 +77,23 @@ namespace TiltBrush.Layers
             CanvasScript canvas = sceneScript.AddLayer();
             GameObject layer = Instantiate(layerPrefab, this.transform);
 
-            Debug.Log("Creating Layer " + layer.name);
+            if (debug) Debug.Log("Creating Layer " + layer.name);
 
             // put it into the dict
             layerMap.Add(layer, canvas);
             layerObjects.Add(layer);
 
             // set the layer name on the ui
-            layer.GetComponentInChildren<TMPro.TMP_Text>().text = GetLayerCanvas(layer).name;
+            if(GetLayerCanvas(layer))
+                layer.GetComponentInChildren<TMPro.TMP_Text>().text = GetLayerCanvas(layer).name;
         }
 
         [EasyButtons.Button]
         public void RemoveLayer(GameObject layer)
         {
-            Debug.Log("Removed Layer " + layer.name);
+            if (!GetLayerCanvas(layer)) return;
+
+            if (debug) Debug.Log("Removed Layer " + layer.name);
 
             sceneScript.DeleteLayer(GetLayerCanvas(layer));
 
@@ -101,6 +107,8 @@ namespace TiltBrush.Layers
         [EasyButtons.Button]
         public void ClearLayer(GameObject layer)
         {
+            if (!GetLayerCanvas(layer)) return;
+
             CanvasScript canvas = GetLayerCanvas(layer);
             canvas.BatchManager.ResetPools();
         }
@@ -108,7 +116,9 @@ namespace TiltBrush.Layers
         [EasyButtons.Button]
         public void ToggleVisibility(GameObject layer)
         {
-            Debug.Log("Toggled Layer Visibility of " + layer.name);
+            if (!GetLayerCanvas(layer)) return;
+
+            if (debug) Debug.Log("Toggled Layer Visibility of " + layer.name);
 
             CanvasScript canvasScript = GetLayerCanvas(layer);
             if (canvasScript.gameObject.activeSelf) canvasScript.gameObject.SetActive(false);
@@ -118,16 +128,40 @@ namespace TiltBrush.Layers
         [EasyButtons.Button]
         public void SetActiveLayer(GameObject layer)
         {
-            Debug.Log("Set Active Layer to " + layer.name);
+            if (!GetLayerCanvas(layer)) return;
 
             sceneScript.ActiveCanvas = GetLayerCanvas(layer);
+
+            if (debug) Debug.Log("Set Active Layer to " + sceneScript.ActiveCanvas);
+        }
+
+        [EasyButtons.Button]
+        public void PrintDictionary()
+        {
+            foreach (var layer in layerMap)
+            {
+                if (debug) Debug.Log("Key: " + layer.Key + "Value: " + layer.Value);
+                if (debug) Debug.Log("Key's HashCode: " + layer.Key.GetHashCode());
+            }
         }
 
         // Utils
+        [EasyButtons.Button]
+        [SerializeField] 
         private CanvasScript GetLayerCanvas(GameObject layer)
-        {
-            return layerMap[layer];
-        }
+        {      
+            try
+            {
+                if (debug) Debug.Log("Canvas Value: " + layerMap[layer]);
 
+                return layerMap[layer];
+            }
+            catch (KeyNotFoundException e)
+            {
+                if (debug) Debug.LogException(e);
+                return null;
+            }
+            
+        }
     }
 }

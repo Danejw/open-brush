@@ -388,21 +388,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3629242930406565158}
     m_Modifications:
-    - target: {fileID: 4798737524918308570, guid: 7595d1b7ee185294da9aa0a8889ed6d8,
-        type: 3}
-      propertyPath: m_ButtonTexture
-      value: 
-      objectReference: {fileID: 2800000, guid: 57ec9586d21ff9142abf94cca6f69ef3, type: 3}
-    - target: {fileID: 4798737524918308570, guid: 7595d1b7ee185294da9aa0a8889ed6d8,
-        type: 3}
-      propertyPath: m_ToggleOnTexture
-      value: 
-      objectReference: {fileID: 2800000, guid: a4a528fdb5d692643b64c703e0e9a47e, type: 3}
-    - target: {fileID: 4798737524918308570, guid: 7595d1b7ee185294da9aa0a8889ed6d8,
-        type: 3}
-      propertyPath: m_AllowUnavailable
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7850322456706919294, guid: 7595d1b7ee185294da9aa0a8889ed6d8,
         type: 3}
       propertyPath: m_RootOrder
@@ -463,11 +448,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PanelButton_Layer
       objectReference: {fileID: 0}
-    - target: {fileID: 7853234119872618238, guid: 7595d1b7ee185294da9aa0a8889ed6d8,
-        type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7595d1b7ee185294da9aa0a8889ed6d8, type: 3}
 --- !u!4 &3737109993340061038 stripped
@@ -487,11 +467,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PanelButton_Hide
-      objectReference: {fileID: 0}
-    - target: {fileID: 1215067258630681599, guid: 372c04dc31129fd43bfcb500fbbaff68,
-        type: 3}
-      propertyPath: m_Layer
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1351469801826090186, guid: 372c04dc31129fd43bfcb500fbbaff68,
         type: 3}

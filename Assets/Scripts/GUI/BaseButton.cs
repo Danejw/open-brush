@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -338,6 +339,7 @@ namespace TiltBrush
 
         override public void ButtonPressed(RaycastHit rHitInfo)
         {
+            if (!canPress) return;
             // Long press buttons don't trigger press until release.
             if (m_LongPressReleaseButton)
             {
@@ -354,7 +356,7 @@ namespace TiltBrush
                     // Buttons that trigger popups reset their scale, which is stomped by
                     // this if OnButtonPressed is called first.
                     AdjustButtonPositionAndScale(m_ZAdjustClick, m_HoverScale, m_HoverBoxColliderGrow);
-                    OnButtonPressed();
+                    StartCoroutine(debounce());
                     m_CurrentButtonState = ButtonState.Pressed;
                     if (m_ButtonHasPressedAudio)
                     {
@@ -368,7 +370,19 @@ namespace TiltBrush
             }
         }
 
-        virtual protected void OnButtonPressed() { }
+        bool canPress = true;
+        private IEnumerator debounce()
+        {
+            canPress = false;
+            OnButtonPressed();
+            yield return new WaitForFixedUpdate();
+            canPress = true;
+        }
+
+        virtual protected void OnButtonPressed() 
+        {
+            
+        }
 
         override public void ButtonReleased()
         {
