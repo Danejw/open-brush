@@ -11,7 +11,6 @@ namespace TiltBrush.Layers
         public delegate void OnAddLayer();
         public static event OnAddLayer onAddLayer;
 
-        // the input from the controller invokes onAddLayer message twice!!! >:(
         protected override void OnButtonPressed() => onAddLayer?.Invoke();
     } 
 }

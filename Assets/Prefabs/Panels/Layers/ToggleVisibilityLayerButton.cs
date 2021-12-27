@@ -5,11 +5,16 @@ using UnityEngine;
 
 namespace TiltBrush.Layers
 {
-    public class ToggleVisibilityLayerButton : OptionButton
+    public class ToggleVisibilityLayerButton : ToggleButton
     {
         public delegate void OnVisiblityToggle(GameObject layerUi);
         public static event OnVisiblityToggle onVisiblityToggle;
 
-        protected override void OnButtonPressed() => onVisiblityToggle?.Invoke(transform.parent.gameObject);
+        protected override void OnButtonPressed()
+        {
+            base.OnButtonPressed();
+
+            onVisiblityToggle?.Invoke(transform.parent.gameObject);
+        }
     }
 }

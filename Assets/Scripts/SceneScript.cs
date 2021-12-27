@@ -127,7 +127,7 @@ namespace TiltBrush
                     m_ActiveCanvas = value;
                     if (ActiveCanvasChanged != null)
                     {
-                        ActiveCanvasChanged(prev, m_ActiveCanvas);
+                        ActiveCanvasChanged?.Invoke(prev, m_ActiveCanvas);
                         // This will be incredibly irritating, but until we have some other feedback...
                         OutputWindowScript.m_Instance.CreateInfoCardAtController(
                             InputManager.ControllerName.Brush,

@@ -125,14 +125,7 @@ MonoBehaviour:
   m_HoverScale: 1.1
   m_HoverBoxColliderGrow: 0.2
   m_AddOverlay: 0
-  m_Command: 0
-  m_CommandParam: -1
-  m_CommandParam2: -1
-  m_RequiresPopup: 0
-  m_CenterPopupOnButton: 0
-  m_PopupOffset: {x: 0, y: 0, z: 0}
-  m_PopupText: 
-  m_ToggleOnDescription: 
-  m_ToggleOnTexture: {fileID: 2800000, guid: a4a528fdb5d692643b64c703e0e9a47e, type: 3}
-  m_AllowUnavailable: 1
-  m_LinkedUIObject: {fileID: 0}
+  debug: 0
+  activated: 0
+  activatedButtonTexture: {fileID: 2800000, guid: 35c509404b758af4fb07fb3dc1ca76f0,
+    type: 3}

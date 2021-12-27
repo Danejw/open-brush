@@ -5,13 +5,40 @@ using UnityEngine;
 
 namespace TiltBrush.Layers
 {
-    public class FocusLayerButton : BaseButton
+    public class FocusLayerButton : ToggleButton
     {
-        public bool debug = true;
-
         public delegate void OnFocusedLayer(GameObject layerUi);
         public static event OnFocusedLayer onFocusedLayer;
 
-        protected override void OnButtonPressed() => onFocusedLayer?.Invoke(transform.parent.gameObject);
+        private void OnEnable()
+        {
+            LayerUI_Manager.onActiveSceneChanged += ParentIsActiveLayerToggleActivation;
+        }
+        protected override void OnDisable()
+        {
+            LayerUI_Manager.onActiveSceneChanged -= ParentIsActiveLayerToggleActivation;
+        }
+
+        protected override void OnButtonPressed()
+        {
+            if (activated) return;
+
+            if (!activated)
+                onFocusedLayer?.Invoke(transform.parent.gameObject);
+        }  
+
+        private void ParentIsActiveLayerToggleActivation(GameObject activeLayer)
+        {
+            if (activeLayer == transform.parent.gameObject)
+            {
+                activated = true;
+                ToggleButtonTexture(activated);
+            }
+            else
+            {
+                activated = false;
+                ToggleButtonTexture(activated);
+            }
+        }
     }
 }

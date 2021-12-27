@@ -11,6 +11,9 @@ namespace TiltBrush.Layers
     {
         public bool debug = false;
 
+        public delegate void OnActiveSceneChanged(GameObject layer);
+        public static event OnActiveSceneChanged onActiveSceneChanged;
+
         [SerializeField] private SceneScript sceneScript;
         [SerializeField] private GameObject layerPrefab;
 
@@ -27,6 +30,8 @@ namespace TiltBrush.Layers
             DeleteLayerButton.onDeleteLayer += RemoveLayer;
             FocusLayerButton.onFocusedLayer += SetActiveLayer;
             ToggleVisibilityLayerButton.onVisiblityToggle += ToggleVisibility;
+
+            App.Scene.ActiveCanvasChanged += ActiveSceneChanged;
         }
 
         private void Destroy()
@@ -143,6 +148,14 @@ namespace TiltBrush.Layers
                 if (debug) Debug.Log("Key: " + layer.Key + "Value: " + layer.Value);
                 if (debug) Debug.Log("Key's HashCode: " + layer.Key.GetHashCode());
             }
+        }
+
+        private void ActiveSceneChanged(CanvasScript prev, CanvasScript current)
+        {
+            // unOptimized code.... searched trhough the dictionary to find a value and return a key, invoke a message with that key as its parameter
+            foreach (var layer in layerMap)
+                if (layer.Value == current)
+                    onActiveSceneChanged?.Invoke(layer.Key);
         }
 
         // Utils
