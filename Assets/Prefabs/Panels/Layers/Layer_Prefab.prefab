@@ -203,26 +203,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3629242930406565158}
     m_Modifications:
-    - target: {fileID: 1781126387072998529, guid: 9db6de3a1141ff24ea3a40222f25246f,
-        type: 3}
-      propertyPath: m_AtlasTexture
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1781126387072998529, guid: 9db6de3a1141ff24ea3a40222f25246f,
-        type: 3}
-      propertyPath: m_ToggleButton
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1781126387072998529, guid: 9db6de3a1141ff24ea3a40222f25246f,
-        type: 3}
-      propertyPath: m_ButtonTexture
-      value: 
-      objectReference: {fileID: 2800000, guid: f1831d2ed278b99499541d1559015daa, type: 3}
-    - target: {fileID: 1781126387072998529, guid: 9db6de3a1141ff24ea3a40222f25246f,
-        type: 3}
-      propertyPath: m_DescriptionText
-      value: Clear
-      objectReference: {fileID: 0}
     - target: {fileID: 8025636975830658347, guid: 9db6de3a1141ff24ea3a40222f25246f,
         type: 3}
       propertyPath: m_RootOrder
@@ -282,11 +262,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PanelButton_Clear
-      objectReference: {fileID: 0}
-    - target: {fileID: 8029199270954784939, guid: 9db6de3a1141ff24ea3a40222f25246f,
-        type: 3}
-      propertyPath: m_Layer
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9db6de3a1141ff24ea3a40222f25246f, type: 3}
@@ -362,16 +337,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PanelButton_Delete
-      objectReference: {fileID: 0}
-    - target: {fileID: 4317228714540023563, guid: 1c86458d1a7525744b384f8816d516f5,
-        type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4317228714540023563, guid: 1c86458d1a7525744b384f8816d516f5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c86458d1a7525744b384f8816d516f5, type: 3}

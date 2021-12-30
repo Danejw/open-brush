@@ -10,6 +10,11 @@ namespace TiltBrush.Layers
         public delegate void OnClearLayer(GameObject layer);
         public static event OnClearLayer onClearLayer;
 
-        protected override void OnButtonPressed() => onClearLayer?.Invoke(transform.parent.gameObject);
+        protected override void OnButtonPressed()
+        {
+            base.OnButtonPressed();
+
+            onClearLayer?.Invoke(transform.parent.gameObject);
+        }
     }
 }

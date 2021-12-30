@@ -141,7 +141,6 @@ namespace TiltBrush
             SignOutConfirm,
             ReadOnlyNotice,
             OpenColorOptionsPopup = 7000,
-
         }
 
         public enum ControlsType
@@ -4843,6 +4842,7 @@ namespace TiltBrush
                     EatGazeObjectInput();
                     break;
                 case GlobalCommands.Null: break; // Intentionally blank.
+
                 default:
                     Debug.LogError($"Unrecognized command {rEnum}");
                     break;

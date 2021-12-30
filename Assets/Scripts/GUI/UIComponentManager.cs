@@ -27,7 +27,7 @@ namespace TiltBrush
         private List<UIComponent> m_UIComponents;
         private GameObject m_ActiveInputObject;
         private UIComponent m_ActiveInputUIComponent;
-        private BasePanel m_PopUpPanel;
+        [SerializeField] private BasePanel m_PopUpPanel;
 
         // This is an accessor for ideal future purposes.  Currently, we have portions of the UI
         // that derive from UIComponent and are managed by a UIComponentManager.  We also have portions

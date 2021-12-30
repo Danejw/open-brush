@@ -559,10 +559,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aeb2c80443c4314bb3cbe128f0857a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   sceneScript: {fileID: 0}
   layerPrefab: {fileID: 7290462010586009958, guid: 11ea7c56cbc37e944bb9fcd3cdb20b8a,
     type: 3}
-  createLayersOnStart: 1
+  createLayersOnStart: 0
   howManyLayers: 4
 --- !u!223 &5749615451782294573
 Canvas:
@@ -919,7 +920,7 @@ PrefabInstance:
     - target: {fileID: 4123316529645228206, guid: e6acd08b146ccc146820104c9d4e48fd,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6acd08b146ccc146820104c9d4e48fd, type: 3}

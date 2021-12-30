@@ -22,26 +22,8 @@ namespace TiltBrush.Layers
 
         [SerializeField] private bool createLayersOnStart = true;
         [SerializeField] private int howManyLayers = 4;
+        [SerializeField] private int maxLayers = 5;
 
-        private void Awake()
-        {
-            AddLayerButton.onAddLayer += CreateLayer;
-            ClearLayerButton.onClearLayer += ClearLayer;
-            DeleteLayerButton.onDeleteLayer += RemoveLayer;
-            FocusLayerButton.onFocusedLayer += SetActiveLayer;
-            ToggleVisibilityLayerButton.onVisiblityToggle += ToggleVisibility;
-
-            App.Scene.ActiveCanvasChanged += ActiveSceneChanged;
-        }
-
-        private void Destroy()
-        {
-            AddLayerButton.onAddLayer -= CreateLayer;
-            ClearLayerButton.onClearLayer -= ClearLayer;
-            DeleteLayerButton.onDeleteLayer -= RemoveLayer;
-            FocusLayerButton.onFocusedLayer -= SetActiveLayer;
-            ToggleVisibilityLayerButton.onVisiblityToggle -= ToggleVisibility;
-        }
 
         private void Start()
         {
@@ -70,15 +52,38 @@ namespace TiltBrush.Layers
                     CreateLayer();            
         }
 
+        //! Subscribes to events
         private void OnEnable()
         {
-            sceneScript = FindObjectOfType<SceneScript>();          
+            sceneScript = FindObjectOfType<SceneScript>();
+
+            AddLayerButton.onAddLayer += CreateLayer;
+            ClearLayerButton.onClearLayer += ClearLayer;
+            DeleteLayerButton.onDeleteLayer += RemoveLayer;
+            FocusLayerButton.onFocusedLayer += SetActiveLayer;
+            ToggleVisibilityLayerButton.onVisiblityToggle += ToggleVisibility;
+
+            App.Scene.ActiveCanvasChanged += ActiveSceneChanged;
+        }
+        //! UnSubsricbes to events
+        private void OnDisable()
+        {
+            AddLayerButton.onAddLayer -= CreateLayer;
+            ClearLayerButton.onClearLayer -= ClearLayer;
+            DeleteLayerButton.onDeleteLayer -= RemoveLayer;
+            FocusLayerButton.onFocusedLayer -= SetActiveLayer;
+            ToggleVisibilityLayerButton.onVisiblityToggle -= ToggleVisibility;
+
+            App.Scene.ActiveCanvasChanged -= ActiveSceneChanged;
         }
 
 
+        //! Create a Canvas from the SceneScript reference, and instantiates layer UI prefab, then zips them together in a dictionary with the Layer Ui as the Key and the Canvas a its value.
         [EasyButtons.Button]
         public void CreateLayer()
         {
+            if (layerMap.Count >= maxLayers) return;
+
             CanvasScript canvas = sceneScript.AddLayer();
             GameObject layer = Instantiate(layerPrefab, this.transform);
 
@@ -91,12 +96,16 @@ namespace TiltBrush.Layers
             // set the layer name on the ui
             if(GetLayerCanvas(layer))
                 layer.GetComponentInChildren<TMPro.TMP_Text>().text = GetLayerCanvas(layer).name;
+
+            // create layer command
         }
 
+        //! Deletes the canvas from the SceneScript reference. Removes the KyeValuePair from the Dictionary and destroys the layer Ui object
         [EasyButtons.Button]
         public void RemoveLayer(GameObject layer)
         {
-            if (!GetLayerCanvas(layer)) return;
+            if (!GetLayerCanvas(layer)) return; // ensure that the canvas exists
+            if (GetLayerCanvas(layer) == sceneScript.MainCanvas) return; // Dont delete the main canvas
 
             if (debug) Debug.Log("Removed Layer " + layer.name);
 
@@ -107,17 +116,24 @@ namespace TiltBrush.Layers
             layerObjects.Remove(layer);
 
             Destroy(layer);
+
+            // Remove Layer Command
         }
 
+        //! Resets the pools of the canvas, clearing all paint within it
         [EasyButtons.Button]
         public void ClearLayer(GameObject layer)
         {
             if (!GetLayerCanvas(layer)) return;
 
             CanvasScript canvas = GetLayerCanvas(layer);
-            canvas.BatchManager.ResetPools();
+            //canvas.BatchManager.ResetPools();
+
+            // clear layer command
+            new ClearLayerCommand(canvas.BatchManager);
         }
 
+        //! Toggles the visibility of the Canvas
         [EasyButtons.Button]
         public void ToggleVisibility(GameObject layer)
         {
@@ -130,6 +146,7 @@ namespace TiltBrush.Layers
             else canvasScript.gameObject.SetActive(true);
         }
 
+        //! Changes the active layer on the SceneScript reference
         [EasyButtons.Button]
         public void SetActiveLayer(GameObject layer)
         {
@@ -138,8 +155,11 @@ namespace TiltBrush.Layers
             sceneScript.ActiveCanvas = GetLayerCanvas(layer);
 
             if (debug) Debug.Log("Set Active Layer to " + sceneScript.ActiveCanvas);
+
+            // set active layer command
         }
 
+        //! Utitlity to print out the dictionary to view its contents
         [EasyButtons.Button]
         public void PrintDictionary()
         {
@@ -150,6 +170,7 @@ namespace TiltBrush.Layers
             }
         }
 
+        //! Looks through the values of the layerMap dictionary to find its key 
         private void ActiveSceneChanged(CanvasScript prev, CanvasScript current)
         {
             // unOptimized code.... searched trhough the dictionary to find a value and return a key, invoke a message with that key as its parameter
@@ -159,6 +180,7 @@ namespace TiltBrush.Layers
         }
 
         // Utils
+        //! Returns the canvas value of a layer Ui key
         [EasyButtons.Button]
         [SerializeField] 
         private CanvasScript GetLayerCanvas(GameObject layer)

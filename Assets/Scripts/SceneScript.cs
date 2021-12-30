@@ -218,6 +218,7 @@ namespace TiltBrush
             m_Lights[(int)LightMode.NoShadow].renderMode = LightRenderMode.ForceVertex;
         }
 
+        //! Adds a canvas layer to the scene
         [EasyButtons.Button]
         public CanvasScript AddLayer()
         {
@@ -244,6 +245,7 @@ namespace TiltBrush
             return null;
         }
 
+        //! Deletes a canvas from the scene
         [EasyButtons.Button]
         public void DeleteLayer(CanvasScript layer)
         {

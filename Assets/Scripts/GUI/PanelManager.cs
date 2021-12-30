@@ -521,7 +521,7 @@ namespace TiltBrush
                 bool attributesFromDisk = false;
                 if (advancedPanel)
                 {
-                    attributesFromDisk = m_CachedPanelLayouts.ApplyLayoutToPanel(p);
+                    //attributesFromDisk = m_CachedPanelLayouts.ApplyLayoutToPanel(p);
                 }
                 if (!attributesFromDisk)
                 {
@@ -2519,6 +2519,12 @@ namespace TiltBrush
         public void SetCurrentColorOnAllColorPickers(Color col)
         {
             App.BrushColor.CurrentColor = col;
+        }
+
+        [EasyButtons.Button]
+        public void ClearPlayerPrefsCache()
+        {
+            AdvancedPanelLayouts.ClearPlayerPrefs();
         }
     }
 
