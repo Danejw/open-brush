@@ -463,7 +463,6 @@ namespace TiltBrush
             m_WandPanelsRotationLastFeedbackAngle = 0.0f;
 
             // Init panes.
-            /* Edited Code.. redirected to CreateWandPlane()
             m_WandPanes = new WandPane[3];
             for (int i = 0; i < 3; ++i)
             {
@@ -477,12 +476,6 @@ namespace TiltBrush
             m_WandPaneVisualsMeshRenderer =
                 m_WandPaneVisuals.transform.GetChild(0).GetComponent<Renderer>();
             m_WandPaneVisualsState = PaneVisualsState.Hidden;
-            */
-
-            CreateWandPlane();
-
-
-
 
             Debug.AssertFormat((App.Config.m_SdkMode == SdkMode.Ods) || (m_AdminPanel != null),
                 "Admin Panel required.");
@@ -509,27 +502,6 @@ namespace TiltBrush
                 Shader.SetGlobalFloat("_PanelMipmapBias", m_PanelMipmapBias);
             }
         }
-
-        private void CreateWandPlane()
-        {
-            m_WandPanes = new WandPane[3];
-            for (int i = 0; i < 3; ++i)
-            {
-                m_WandPanes[i] = new WandPane();
-                //m_WandPanes[i].angleOffset = i * 120.0f;
-                m_WandPanes[i].positionOffset =  i * 2;
-                m_WandPanes[i].orderedPanelList = new List<BasePanel>();
-
-                m_WandPaneVisuals = Instantiate(m_WandPaneVisualsPrefab, new Vector3(m_WandPanes[i].positionOffset, m_WandPanes[i].positionOffset, m_WandPanes[i].positionOffset), Quaternion.identity);
-                m_WandPaneVisuals.SetActive(false);
-                m_WandPaneVisualsMeshRenderer =
-                    m_WandPaneVisuals.transform.GetChild(0).GetComponent<Renderer>();
-                m_WandPaneVisualsState = PaneVisualsState.Hidden;
-            }       
-        }
-
-
-
 
         void CreatePanel(PanelMapKey key, bool advancedPanel)
         {

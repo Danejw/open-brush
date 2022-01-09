@@ -399,6 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 739d5b1996234d64992a2ae60c3723e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_PopUpPanel: {fileID: 0}
 --- !u!1 &1000013585526572
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,7 +495,6 @@ GameObject:
   - component: {fileID: 5987025223109637973}
   - component: {fileID: 5749615451782294573}
   - component: {fileID: 8505513285256064373}
-  - component: {fileID: 5349000176655491068}
   m_Layer: 5
   m_Name: Vertical
   m_TagString: Untagged
@@ -565,6 +565,7 @@ MonoBehaviour:
     type: 3}
   createLayersOnStart: 0
   howManyLayers: 4
+  maxLayers: 5
 --- !u!223 &5749615451782294573
 Canvas:
   m_ObjectHideFlags: 0
@@ -603,58 +604,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5349000176655491068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5958238173880272814}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b71aa88e9bf8432f89217a09c5a0b21c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MultiplayerInfo: {fileID: 0}
-  OnStartBehaviour: 4
-  OnShowCallback:
-    Enabled: 0
-    EventName: OnShowCallback
-    Runners: []
-    Event:
-      m_PersistentCalls:
-        m_Calls: []
-  OnVisibleCallback:
-    Enabled: 0
-    EventName: OnVisibleCallback
-    Runners: []
-    Event:
-      m_PersistentCalls:
-        m_Calls: []
-  OnHideCallback:
-    Enabled: 0
-    EventName: OnHideCallback
-    Runners: []
-    Event:
-      m_PersistentCalls:
-        m_Calls: []
-  OnHiddenCallback:
-    Enabled: 0
-    EventName: OnHiddenCallback
-    Runners: []
-    Event:
-      m_PersistentCalls:
-        m_Calls: []
-  OnVisibilityChangedCallback:
-    m_PersistentCalls:
-      m_Calls: []
-  CustomStartPosition: {x: 0, y: 0, z: 0}
-  UseCustomStartPosition: 0
-  AutoHideAfterShow: 0
-  AutoHideAfterShowDelay: 0
-  DisableGameObjectWhenHidden: 0
-  DisableCanvasWhenHidden: 1
-  DisableGraphicRaycasterWhenHidden: 1
 --- !u!1 &7912276510237571414
 GameObject:
   m_ObjectHideFlags: 0
