@@ -27964,7 +27964,7 @@ MonoBehaviour:
   m_WandRadius: 0.85
   m_AdminPanelWandRadius: 0.6
   m_TransitionSpeed: 8
-  m_SketchbookOffset: {x: 0, y: -0.3, z: 0.4}
+  m_SketchbookOffset: {x: 1, y: -0.3, z: 0.4}
   m_SketchbookRotation: {x: 90, y: 0, z: 0}
   m_WandPanelsInitialSketchLoadOriginAngle: 0
   m_WandPanelsDefaultOriginAngle: 120
@@ -27986,7 +27986,7 @@ MonoBehaviour:
   m_WandPaneHapticDelay: 0.1
   m_WandPaneVisualsPrefab: {fileID: 1000011286014054, guid: 981554b0ec0de8e458a9869b9e80ddf4,
     type: 3}
-  m_WandPaneVisualsColorOK: {r: 0.3529412, g: 0.3529412, b: 0.3529412, a: 1}
+  m_WandPaneVisualsColorOK: {r: 0.2396226, g: 0.62540203, b: 1, a: 1}
   m_WandPaneVisualsColorBad: {r: 1, g: 0, b: 0, a: 1}
   m_WandPaneVisualsShowSpeed: 8
   m_PanelMipmapBias: -0.5

@@ -104,7 +104,9 @@ namespace TiltBrush
             ReferenceMobile,
             CameraPath,
             BrushLab,
-            Layers
+
+            // dangerdano enums 15000-15999
+            Layers = 15000
         }
 
         private enum FixedTransitionState
