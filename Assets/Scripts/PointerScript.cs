@@ -52,6 +52,7 @@ namespace TiltBrush
         //this is the list of meshes that make up the standard pointer look: cone + ring
         [SerializeField] private Renderer[] m_PrimaryMeshes;
         [SerializeField] private Transform m_BrushSizeIndicator;
+        [SerializeField] private Transform m_BrushPressureIndicator;
         [SerializeField] private bool m_PreviewLineEnabled;
         [SerializeField] private float m_PreviewLineControlPointLife = 1.0f;
         [SerializeField] private float m_PreviewLineIdealLength = 1.0f;
@@ -67,10 +68,10 @@ namespace TiltBrush
         private float m_GlowPreviewEnabled = 1.0f;
 
         private Vector3 m_InitialBrushSizeScale;
-        private TiltBrush.BrushDescriptor m_CurrentBrush;
-        private float m_CurrentBrushSize; // In pointer aka room space
-        private Vector2 m_BrushSizeRange;
-        private float m_CurrentPressure; // TODO: remove and query line instead?
+        [SerializeField]  private TiltBrush.BrushDescriptor m_CurrentBrush;
+        [SerializeField]  private float m_CurrentBrushSize; // In pointer aka room space
+        [SerializeField]  private Vector2 m_BrushSizeRange;
+        [SerializeField]  private float m_CurrentPressure; // TODO: remove and query line instead?
         private BaseBrushScript m_CurrentLine;
         private ParametricStrokeCreator m_CurrentCreator;
         private float m_ParametricCreatorBackupStrokeSize; // In pointer aka room space
@@ -164,7 +165,7 @@ namespace TiltBrush
         public float BrushSizeAbsolute
         {
             get { return m_CurrentBrushSize; }
-            set { _SetBrushSizeAbsolute(Mathf.Clamp(value, m_BrushSizeRange.x, m_BrushSizeRange.y)); }
+            set { _SetBrushSizeAbsolute( Mathf.Clamp(value, m_BrushSizeRange.x, m_BrushSizeRange.y)); }
         }
 
         public float MonoscopicLineDepth
@@ -217,6 +218,7 @@ namespace TiltBrush
             if (m_BrushSizeIndicator)
             {
                 m_InitialBrushSizeScale = m_BrushSizeIndicator.localScale;
+                m_BrushPressureIndicator.localScale = m_BrushSizeIndicator.localScale;
             }
             m_CurrentBrushSize = 1.0f;
             m_BrushSizeRange.x = 1.0f;
@@ -320,6 +322,17 @@ namespace TiltBrush
                     // Adjust volume of each layer based on brush speed
                     m_AudioSources[i].volume = LayerVolume(i, m_CurrentTotalVolume);
                     m_AudioSources[i].pitch += fPitchAdjust;
+                }
+            }
+
+            // match pressure with indicator
+            if (App.Instance.IsInStateThatAllowsPainting()) 
+            {
+                if (m_BrushPressureIndicator != null)
+                {
+                    //m_BrushPressureIndicator.localScale = new Vector3(GetPressure(), GetPressure(), GetPressure());
+                    float scaledPressure = Remap(GetPressure(), 0,1, m_BrushSizeRange.x, m_CurrentBrushSize);
+                    m_BrushPressureIndicator.localScale = new Vector3(scaledPressure, scaledPressure, scaledPressure);
                 }
             }
         }
@@ -685,6 +698,18 @@ namespace TiltBrush
             m_CurrentPressure = fPressure;
         }
 
+        public float GetPressure()
+        {
+            return m_CurrentPressure;
+        }
+
+        float Remap(float value, float from1, float to1, float from2, float to2)
+        {
+            return (value - from1) / (to1 - from1) * (to2 - from2) + from2;          
+        }
+
+
+
         public void SetColor(Color rColor)
         {
             m_CurrentColor = rColor;
@@ -759,6 +784,7 @@ namespace TiltBrush
             m_BrushSizeIndicator.gameObject.SetActive(show);
         }
 
+        
         void _SetBrushSizeAbsolute(float value)
         {
             m_CurrentBrushSize = value;
